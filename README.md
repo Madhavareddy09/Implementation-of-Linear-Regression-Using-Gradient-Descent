@@ -75,7 +75,6 @@ print(f"Predicted Value: {pre}")
 
 ## Output:
 ![Screenshot 2024-03-13 082127](https://github.com/Madhavareddy09/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145742470/2753e91c-b5ea-4f1c-b39f-3fab8470dace)
-
 ![Screenshot 2024-03-13 082202](https://github.com/Madhavareddy09/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145742470/393b13d6-3776-4dcb-8873-66a17d294444)
 
 ## Result:
