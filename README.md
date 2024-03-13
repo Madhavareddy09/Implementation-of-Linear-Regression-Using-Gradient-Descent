@@ -8,11 +8,29 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+### 1.Import Necessary Libraries:
 
+Import NumPy, pandas, and StandardScaler for numerical operations, data handling, and feature scaling, respectively.
+
+### 2.Define the Linear Regression Function:
+
+Create a linear regression function using gradient descent to iteratively update parameters, minimizing the difference between predicted and actual values.
+
+### 3.Load and Preprocess the Data:
+
+Load the dataset, extract features and target variable, and standardize both using StandardScaler for consistent model training.
+
+### 4.Perform Linear Regression:
+
+Apply the defined linear regression function to the scaled features and target variable, obtaining optimal parameters for the model.
+
+### 5.Make Predictions on New Data:
+
+Prepare new data, scale it, and use the trained model to predict the target variable, transforming predictions back to the original scale.
+
+### 6.Print the Predicted Value:
+
+Display the predicted value for the target variable based on the linear regression model applied to the new data.
 ## Program:
 ```python
 '''
@@ -20,66 +38,45 @@ Program to implement the linear regression using gradient descent.
 Developed by : K MADHAVA REDDY
 RegisterNumber : 212223240064
 '''
+import numpy as np
 import pandas as pd
-data = pd.read_csv('Placement_Data.csv')
-data.head()
-
-data1 = data.copy()
-data1 = data1.drop(["sl_no","salary"],axis = 1)
-data1.head()
-
-data1.isnull().sum()
-
-data1.duplicated().sum()
-
-from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
-data1["gender"] = le.fit_transform(data1["gender"])
-data1["ssc_b"] = le.fit_transform(data1["ssc_b"])
-data1["hsc_b"] = le.fit_transform(data1["hsc_b"])
-data1["hsc_s"] = le.fit_transform(data1["hsc_s"])
-data1["degree_t"] = le.fit_transform(data1["degree_t"])
-data1["workex"]= le.fit_transform(data1["workex"])
-data1["specialisation"] = le.fit_transform(data1["specialisation"])
-data1["status"] = le.fit_transform(data1["status"])
-data1
-
-x = data1.iloc[:,:-1]
-x
-
-y = data1["status"]
-y
-
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.2,random_state = 0)
-
-from sklearn.linear_model import LogisticRegression
-lr = LogisticRegression(solver = "liblinear")
-lr.fit(x_train,y_train)
-y_pred = lr.predict(x_test)
-y_pred
-
-from sklearn.metrics import accuracy_score
-accuracy = accuracy_score(y_test,y_pred)
-accuracy
-
-from sklearn.metrics import confusion_matrix
-confusion = (y_test,y_pred)
-confusion
-
-from sklearn.metrics import classification_report
-c_report = classification_report(y_test,y_pred)
-c_report
-
-lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
-
+from sklearn.preprocessing import StandardScaler
+def linear_regression(X1,y,learning_rate=0.01,num_iters=1000):
+    X=np.c_[np.ones(len(X1)),X1]
+    theta=np.zeros(X.shape[1]).reshape(-1,1)
+    for _ in range(num_iters):
+        predictions=(X).dot(theta).reshape(-1,1)
+        errors=(predictions-y).reshape(-1,1)
+        theta-=learning_rate*(1/len(X1)*X.T.dot(errors))
+    return theta
+data=pd.read_csv('50_startups.csv',header=None)
+print(data.head())
+X=(data.iloc[1:,:-2].values)
+print(X)
+X1=X.astype(float)
+scaler=StandardScaler()
+y=(data.iloc[1:,-1].values).reshape(-1,1)
+print(y)
+X1_Scaled=scaler.fit_transform(X1)
+Y1_Scaled=scaler.fit_transform(y)
+print(X1_Scaled)
+print(Y1_Scaled)
+theta=linear_regression(X1_Scaled,Y1_Scaled)
+new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled=scaler.fit_transform(new_data)
+prediction=np.dot(np.append(1,new_Scaled),theta)
+prediction=prediction.reshape(-1,1)
+pre=scaler.inverse_transform(prediction)
+print(f"Predicted Value: {pre}")
 
 ```
 
 
 
 ## Output:
+![Screenshot 2024-03-13 082127](https://github.com/Madhavareddy09/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145742470/2753e91c-b5ea-4f1c-b39f-3fab8470dace)
 
+![Screenshot 2024-03-13 082202](https://github.com/Madhavareddy09/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145742470/393b13d6-3776-4dcb-8873-66a17d294444)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
